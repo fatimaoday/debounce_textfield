@@ -6,11 +6,10 @@ class DebounceTextfield extends StatefulWidget {
   VoidCallback? onTextfieldEmpty;
   Duration duration;
   double height;
-  Widget inputIcon;
+  Widget leadingWidget;
   TextStyle textFieldStyle;
   BoxDecoration textFieldDecoration;
-  String hintText;
-  TextStyle hintStyle;
+  InputDecoration inputDecoration;
   TextDirection direction;
   Widget clearButtonIcon;
   EdgeInsetsGeometry margin;
@@ -21,11 +20,13 @@ class DebounceTextfield extends StatefulWidget {
     this.onTextfieldEmpty,
     this.duration = const Duration(milliseconds: 500),
     this.height = 40,
-    this.inputIcon = const SizedBox.shrink(),
+    this.leadingWidget = const SizedBox.shrink(),
     this.textFieldStyle = const TextStyle(fontSize: 13),
     this.textFieldDecoration = const BoxDecoration(color: Color(0xffE8E8E8)),
-    this.hintText = '',
-    this.hintStyle = const TextStyle(fontSize: 13, color: Color(0xffaeaeae)),
+    this.inputDecoration = const InputDecoration.collapsed(
+      hintText: 'Enter Your Text Here',
+      hintStyle: TextStyle(fontSize: 13, color: Color(0xffaeaeae)),
+    ),
     this.clearButtonIcon =
         const Icon(Icons.clear_rounded, color: Color(0xffaeaeae), size: 20),
     this.direction = TextDirection.ltr,
@@ -84,16 +85,13 @@ class _DebounceTextfieldState extends State<DebounceTextfield> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            widget.inputIcon,
+            widget.leadingWidget,
             const SizedBox(width: 5),
             Expanded(
               child: TextFormField(
                 controller: _inputController,
                 onChanged: (value) => runDebouncer(value),
-                decoration: InputDecoration.collapsed(
-                  hintText: widget.hintText,
-                  hintStyle: widget.hintStyle,
-                ),
+                decoration: widget.inputDecoration,
                 style: widget.textFieldStyle,
               ),
             ),
